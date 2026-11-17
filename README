@@ -1,0 +1,234 @@
+"""
+DSA Final Assignment 
+Author: Thiranya Semindi Bandara |  Student ID: 22944368
+Date: 2025/10/22
+
+Academic Reuse / Self-Citation:
+    Portions adapted from my practical submissions (Weeks 6,7,8,9) with modifications.
+    lecture slides
+
+Algorithm References:
+    Dijkstra shortest path implemented from first principles.
+    References:
+      - E. W. Dijkstra, 1959, "A note on two problems in connexion with graphs".
+      - Cormen, Leiserson, Rivest, Stein, "Introduction to Algorithms", 3rd ed., §24.3.
+
+Constraints:
+    No built-in algorithmic helpers (no heapq, no list.sort/sorted, no external graph libs).
+
+Error Handling:
+    All file I/O and user inputs are validated with try/except and range checks.
+"""
+
+Folder Overview
+
+DSA FINAL ASSIGNMENT/
+├── benchmarking.py          # Sorting performance module (Module 4)
+├── cli.py                   # Optional CLI / menu interface
+├── core sorts.py            # Low-level sort implementations (merge, quick)
+├── corridors.csv            # Graph edges (From, To, Weight)
+├── datasets.py              # Optional data generator
+├── demo_scheduler.py        # Demo for heap scheduling
+├── departments.csv          # Graph nodes (Department names)
+├── DSAHashEntry.py          # Hash table entry class
+├── DSAHashTable.py          # Hash table implementation
+├── DSAHeap.py               # Heap (priority queue) implementation
+├── DSAHeapEntry.py          # Heap entry structure
+├── EmergencyScheduler.py    # Wrapper for heap-based patient scheduling
+├── graph.py                 # Graph structure (BFS, DFS, Dijkstra)
+├── hash_table.py            # Patient hash table module
+├── helpers.py               # Utility functions (optional)
+├── main_graph.py            # Unified main driver (Modules 1–4)
+├── MaxHeap.py               # Alternate heap (if used)
+├── menu.py                  # Interactive menu (optional)
+├── numbers.csv              # Dataset for sorting module
+├── patients.csv             # Dataset for hash table module
+├── requests.csv             # Dataset for scheduler module
+├── SchedRequest.py          # Scheduler request helper
+├── scheduler.py             # EmergencyScheduler alternative (Module 3)
+├── sorting.py               # Merge + Quick sort implementations (Module 4)
+└── testharness.py           # Automated validation (Modules 1–4)
+
+HOW TO RUN 
+
+# Instructions to Run menu.py
+
+The menu.py file provides a **single interactive interface** to access all four modules — Graph, Hash Table, Heap Scheduler, and Sorting.
+
+## Run the Program
+      |---python menu.py
+
+## Main Menu Overview
+
+When you run it, you’ll see something like this:
+
+=========================================
+             MAIN MENU
+=========================================
+1. Graphs
+2. Hash Table
+3. Heap
+4. Sorting
+5. Exit
+Enter choice:
+
+### Option 1: Graph Module
+
+Handles hospital navigation using a graph.
+
+1. Add Department
+2. Add Corridor
+3. Display Graph
+4. BFS Traversal
+5. DFS Cycle Detection
+6. Dijkstra Shortest Path
+7. Load Graph from CSV
+8. Save Graph to CSV
+9. Return to Main Menu
+
+
+ **Recommended first:**
+
+* Choose 7 to load from departments.csv and corridors.csv.
+* Then try BFS (4), DFS (5), and Dijkstra (6).
+
+---
+
+### Option 2: Hash Table Module
+
+Stores patient records and supports search/delete operations.
+
+**Menu**
+
+1. Insert Record
+2. Search Record
+3. Delete Record
+4. Load from CSV
+5. Save to CSV
+6. Display Table
+7. Return to Main Menu
+
+
+ **Recommended order:**
+
+1. Choose 4 to load patients from patients.csv.
+2. Try inserting or searching for patients (options 1–3).
+3. Display table (6) or save it (5).
+  
+
+### Option 3: Patient Heap Menu
+
+Schedules patients by urgency and treatment time.
+
+**Menu**
+
+  1. Insert into Heap                          
+  2. Extract Patient with Highest Priority     
+  3. Peek Highest Priority                    
+  4. Update Patient Priority                   
+  5. Display Heap                              
+  6. Load Hash CSV and Rebuild Heap            
+  7. Return to Main Menu  
+
+ **Recommended order:**
+1. choose 1 and insert patients
+2.Display heap
+3.Peek to priority
+4.Extract top patient
+5.Update priority
+6.Save/load heap CSV
+   CSV Files: patients.csv
+              requests.csv
+
+
+### Option 4: Sorting
+
+Implements Merge Sort and Quick Sort, with benchmarking.
+
+**Menu**
+
+1. Load Numbers from CSV
+2. Save Sorted Data to CSV
+3. Enter Numbers Manually
+4. Run Merge & Quick Sort
+5. Run Benchmark
+6. Return to Main Menu
+
+ **Recommended order:**
+
+1. Option 1 to load from numbers.csv,
+2. Then select option 4 or 5 to run sorting and timing.
+
+
+###  Option 5: Exit
+
+Safely terminates the program.
+
+
+* All data is saved back to CSV if you choose “Save” in each module.
+* You can run modules in any order — they are independent but integrated for demonstration.
+* For Dijkstra or BFS to work, ensure corridors connect all departments.
+* The heap uses the priority formula:
+  P = (6 - UrgencyLevel) + 1000 / TreatmentTime
+  
+
+
+**Full Automated Test
+  |---- python3 testharness.py
+
+This will automatically test:
+  Module 1: Graph traversal and Dijkstra
+  Module 2: Patient Hash Table (insert/search/delete)
+  Module 3: Emergency Scheduler (heap operations)
+  Module 4: Merge & Quick Sort comparison
+
+
+Run modules manually
+
+MODULE 1 --- python3 main_graph.py
+             python3 testharness.py
+
+             Expected Output:
+                       Adjacency List of departments
+                       BFS traversal with level numbers
+                       DFS cycle detection
+                       Dijkstra shortest path and total travel time
+
+CSV Files: departments.csv
+           corridors.csv
+
+MODULE 2 --- python3 main_graph.py
+             python3 testharness.py
+   Look for “MODULE 2: HASH TABLE” in the output.
+
+Expected Output:
+Log of insert, search, and delete operations
+Collision resolution steps (probe indices)
+Load factor and resize behaviour
+
+CSV Files: patients.csv
+           
+
+MODULE 3 --- python3 demo_scheduler.py
+             python3 testharness.py
+
+Expected Output:
+ Heap state after each insertion and extraction
+ Priority calculation:
+ P = (6 - urgency) + (1000 / expected_time)
+ Highest-priority patient always served first
+ Updated heap after urgency/time changes
+
+CSV Files: patients.csv
+           requests.csv
+
+MODULE 4 --- python3 sorting.py
+             python3 cli.py
+             python3 testharness.py
+
+ Expected Output:
+    Sorted lists (using Merge & Quick sort)
+    Runtime comparison for different dataset sizes
+    Performance table and analysis
+
+CSV Files: numbers.csv

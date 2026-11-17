@@ -1,0 +1,14 @@
+From,To,Weight
+Emergency,ICU,2.0
+Emergency,Laboratories,4.0
+Emergency,Radiology,8.0
+ICU,Laboratories,1.0
+ICU,Radiology,7.0
+Laboratories,Pharmacy,3.0
+Laboratories,Radiology,2.0
+Pharmacy,WardA,6.0
+Pharmacy,Theatres,3.0
+Radiology,Theatres,4.0
+Theatres,WardB,5.0
+WardA,WardB,2.0
+WardA,WardC,7.0
